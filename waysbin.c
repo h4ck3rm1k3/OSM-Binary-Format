@@ -6,6 +6,7 @@ int main ()
   FILE * pFile;
   pFile = fopen ( "myfile.bin" , "wb" );
   int i=0;
+  fwrite ((void*)&waycount , sizeof(int), 1 , pFile ); // count of ways
   for (i =0; i < waycount; i++)    {
     int j;
     for (j =0; waynodes[i][j]; j++)    {
