@@ -1,5 +1,5 @@
 #
-all : strgcomp componentsreadbin readalldata conncomp waysreadbin 
+all : strgcomp componentsreadbin readalldata conncomp waysreadbin hierachy
 	echo done
 #bgl 
 #-save-temps
@@ -24,3 +24,6 @@ waysreadbin : waysreadbin.c
 
 dumplatlon : dumplatlon.cpp FOSMBin.hpp
 	g++ -o dumplatlon dumplatlon.cpp
+
+hierachy : hierarchybuilder.cpp FOSMBin.hpp
+	g++ -o hierachy hierarchybuilder.cpp
