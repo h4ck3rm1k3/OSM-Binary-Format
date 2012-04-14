@@ -1,0 +1,8 @@
+
+
+Emit as graphvis :
+     ./bgl > digraph.dot
+
+Strong Components of the ways are calculated with this :
+       ./strgcomp > components.txt
+
