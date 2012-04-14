@@ -25,4 +25,5 @@ sub ProcessVector
 }
 
 ProcessVector("nodeindex.yml","nodeindex.bin");
+ProcessVector("wayindex.yml","wayindex.bin");
 

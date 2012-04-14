@@ -1,5 +1,5 @@
 #
-all : strgcomp componentsreadbin
+all : strgcomp componentsreadbin readalldata
 	echo done
 #bgl 
 #-save-temps
@@ -12,3 +12,6 @@ strgcomp : strongcomponents.cpp
 componentsreadbin : componentsreadbin.c
 	gcc -o componentsreadbin componentsreadbin.c
 # use this to create a pack file perl process_components.pl
+
+readalldata : readalldata.cpp
+	g++ -o readalldata readalldata.cpp

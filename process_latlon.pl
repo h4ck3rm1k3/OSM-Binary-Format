@@ -20,7 +20,7 @@ sub ProcessVector
     my $count=scalar(@data);
     warn "Count is $count";
     print $out pack ("L",$count);
-    print $out pack ("L*",@data);
+    print $out pack ("d*",@data);
     close $out;
 }
 
