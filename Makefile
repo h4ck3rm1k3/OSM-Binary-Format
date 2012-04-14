@@ -16,8 +16,11 @@ componentsreadbin : componentsreadbin.c
 	gcc -o componentsreadbin componentsreadbin.c
 # use this to create a pack file perl process_components.pl
 
-readalldata : readalldata.cpp
+readalldata : readalldata.cpp FOSMBin.hpp
 	g++ -g -o readalldata readalldata.cpp
 
-waysreadbin : waysreadbin.c
+waysreadbin : waysreadbin.c 
 	g++ -o waysreadbin waysreadbin.c
+
+dumplatlon : dumplatlon.cpp FOSMBin.hpp
+	g++ -o dumplatlon dumplatlon.cpp
