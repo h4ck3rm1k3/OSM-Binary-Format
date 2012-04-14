@@ -14,4 +14,7 @@ componentsreadbin : componentsreadbin.c
 # use this to create a pack file perl process_components.pl
 
 readalldata : readalldata.cpp
-	g++ -o readalldata readalldata.cpp
+	g++ -g -o readalldata readalldata.cpp
+
+waysreadbin : waysreadbin.c
+	g++ -o waysreadbin waysreadbin.c

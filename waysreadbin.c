@@ -2,7 +2,7 @@
 int main ()
 {
   FILE * pFile;
-  pFile = fopen ( "myfile.bin" , "r" );
+  pFile = fopen ( "waynodes.bin" , "r" );
   if (!pFile)   {
     printf("file could not be opened\n");
     return 2;
