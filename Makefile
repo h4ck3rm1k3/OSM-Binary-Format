@@ -1,5 +1,5 @@
 #
-all : strgcomp componentsreadbin readalldata
+all : strgcomp componentsreadbin readalldata conncomp waysreadbin 
 	echo done
 #bgl 
 #-save-temps
@@ -8,6 +8,9 @@ bgl :
 
 strgcomp : strongcomponents.cpp
 	mpiCC -g -o strgcomp  strongcomponents.cpp -lboost_system  -lboost_graph
+
+conncomp : conncomponents.cpp
+	mpiCC -g -o conncomp  conncomponents.cpp -lboost_system  -lboost_graph
 
 componentsreadbin : componentsreadbin.c
 	gcc -o componentsreadbin componentsreadbin.c

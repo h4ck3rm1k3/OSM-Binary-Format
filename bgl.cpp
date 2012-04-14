@@ -25,7 +25,7 @@ int main (int argc, char* argv[])
   
   // now read the graph
   FILE * pFile;
-  pFile = fopen ( "myfile.bin" , "r" );
+  pFile = fopen ( "waynodes.bin" , "r" );
   if (!pFile)   {
     printf("file could not be opened\n");
     return 2;
