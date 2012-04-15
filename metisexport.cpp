@@ -96,8 +96,8 @@ int main(int, char*[])
 
 
   geo.read_data<int>    ("nodeindex.bin" , geo.node_id); 
-  int nodecount= geo.node_id.size() +1;
-  edgecount = ceil(edgecount/2)+1; // should round up
+  int nodecount= geo.node_id.size();
+  edgecount = ceil(edgecount/2); // should round up
   cout << nodecount << " "<< edgecount << endl;
 
   vector<int>::const_iterator nid;
