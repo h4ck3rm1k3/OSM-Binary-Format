@@ -2,12 +2,15 @@
 all : strgcomp componentsreadbin readalldata conncomp waysreadbin hierachy metisexport
 	echo done
 #bgl 
-#-save-temps
+#
 bgl :
 	mpiCC -o bgl  bgl.cpp -lboost_system -lboost_mpi 
 
 strgcomp : strongcomponents.cpp
 	mpiCC -g -o strgcomp  strongcomponents.cpp -lboost_system  -lboost_graph
+#-save-temps
+metisexport : metisexport.cpp
+	g++ -g -o metisexport  metisexport.cpp -lboost_system  -lboost_graph
 
 conncomp : conncomponents.cpp
 	mpiCC -g -o conncomp  conncomponents.cpp -lboost_system  -lboost_graph
@@ -28,6 +31,3 @@ dumplatlon : dumplatlon.cpp FOSMBin.hpp
 hierachy : hierarchybuilder.cpp FOSMBin.hpp
 	g++ -o hierachy hierarchybuilder.cpp
 
-
-metisexport : metisexport.cpp FOSMBin.hpp
-	g++ -o metisexport metisexport.cpp

@@ -91,7 +91,7 @@ public:
     int count;
     int i=0;
     int br=fread ((void*)&count , sizeof(int), 1 , pFile ); // count of ways
-    printf("Reading bytes %d count %d\n",br,count);
+    //    printf("Reading bytes %d count %d\n",br,count);
     T data[count];
     br= fread ((void*)&data , sizeof(T), count , pFile ); // index
     fclose (pFile);
@@ -103,10 +103,10 @@ public:
 
   template <class T> void emit(vector<T> & data) {
     vector<int>::const_iterator cii;
-    cout << endl << "Iterator:" << endl;
+    cerr << endl << "Iterator:" << endl;
     for(cii=data.begin(); cii!=data.end(); cii++)
       {
-        cout << *cii << endl;
+        cerr << *cii << endl;
       }
   }
 
@@ -124,12 +124,12 @@ public:
 
   void emit_ways_components()
   {
-    cout << "output the way components " << endl;
+    cerr << "output the way components " << endl;
     way_component_t::iterator wcit;
     for (wcit=way_components.begin();wcit!=way_components.end();wcit++)    {
       std::map<int,int>::iterator wcit2;
       int comp = wcit->second;
-      cout << "way:" << wcit->first << "\tcomponent:" <<  comp  <<  endl;
+      cerr << "way:" << wcit->first << "\tcomponent:" <<  comp  <<  endl;
     }
   }
 
