@@ -135,14 +135,22 @@ public:
 
   void read_data()
   {
-    read_data<double> ("nodelat.bin",node_lat);
-    read_data<int> ("components.bin",node_components);    
-    read_data<double> ("nodelon.bin",node_lon);
-    read_data<int> ("nodeindex.bin",node_id);    
-    read_data<int> ("wayindex.bin",way_id);    
-    reverse_components();
+    read_node_lat();
+    read_node_lon();
+    read_node_id();
+    read_way_id();
     read_way_nodes();
   }
+
+  void read_components() {
+        read_data<int> ("components.bin",node_components);    
+        reverse_components();
+  }
+
+  void read_node_lat(){ read_data<double> ("nodelat.bin"   , node_lat); }
+  void read_node_lon(){ read_data<double> ("nodelon.bin"   , node_lon); }
+  void read_node_id() { read_data<int>    ("nodeindex.bin" , node_id);  }
+  void read_way_id()  { read_data<int>    ("wayindex.bin"  , way_id);   }
 
   void ProcessNodes() {
     

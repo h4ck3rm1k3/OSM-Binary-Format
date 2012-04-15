@@ -1,5 +1,5 @@
 #
-all : strgcomp componentsreadbin readalldata conncomp waysreadbin hierachy
+all : strgcomp componentsreadbin readalldata conncomp waysreadbin hierachy metisexport
 	echo done
 #bgl 
 #-save-temps
@@ -27,3 +27,7 @@ dumplatlon : dumplatlon.cpp FOSMBin.hpp
 
 hierachy : hierarchybuilder.cpp FOSMBin.hpp
 	g++ -o hierachy hierarchybuilder.cpp
+
+
+metisexport : metisexport.cpp FOSMBin.hpp
+	g++ -o metisexport metisexport.cpp
