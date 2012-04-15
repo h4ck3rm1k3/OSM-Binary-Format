@@ -172,14 +172,11 @@ ProcessFile;
 #warn Dumper({Unique SortCrunch @nodelat});
 #Report Unique SortCrunch @nodelat;
 #Report Unique SortCrunch @nodelon;
-if (0)
-{
-    DumpYML "nodelat",\@nodelat;
-    DumpYML "nodelon",\@nodelon;
-    DumpYML "nodeindex",\@nodeindex;
-    DumpYML "nodeids", \%nodeids;
-    DumpYML "wayids",\%wayids;
-    DumpYML "wayindex",\@wayindex;
-}
 
+DumpYML "nodelat",\@nodelat;
+DumpYML "nodelon",\@nodelon;
+DumpYML "nodeindex",\@nodeindex;
+DumpYML "nodeids", \%nodeids;
+DumpYML "wayids",\%wayids;
+DumpYML "wayindex",\@wayindex;
 DumpYML "waycontents", \@waycontents;
