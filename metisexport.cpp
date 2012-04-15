@@ -59,8 +59,8 @@ int read_graph(Graph & g) {
     for (j2 =1; j2< j; j2++)    {
       vertex_descriptor to = (int)waynodes[j2];
       //      edges are from the nodes to each other, not from the way to the edge
-      boost::add_edge(prev +1,to+1, g);
-      boost::add_edge(to+1,prev +1, g);
+      boost::add_edge(prev ,to, g); 
+      //      boost::add_edge(to+1,prev +1, g);
       edgecount++;
       prev= to;
     }
@@ -76,10 +76,10 @@ void print_graph_dispatch(const Graph& G, Name name)
   {
     boost::graph_traits<Graph>::vertex_iterator ui,ui_end;
     for (boost::tie(ui,ui_end) = vertices(G); ui != ui_end; ++ui) {
-      std::cout << get(name,*ui)+1 << " "; // self edge
+      std::cout << get(name,*ui)+1 << " "; // self edge, add one to be 1 indexd not 0
       boost::graph_traits<Graph>::out_edge_iterator ei, ei_end;
       for(boost::tie(ei,ei_end) = out_edges(*ui,G); ei != ei_end; ++ei)
-        std::cout << get(name,target(*ei,G)) << " ";
+        std::cout << get(name,target(*ei,G)) +1 << " ";// add one
       std::cout << std::endl;
     }
   }
@@ -92,16 +92,13 @@ int main(int, char*[])
   Graph G;
   Geography geo;
   int ok =read_graph(G);
-
-  geo.read_data<int>    ("nodeindex.bin" , geo.node_id); 
-  int nodecount=(int) geo.node_id.size()+1;
+  int   nodecount =  num_vertices(G);
   
   if(ok !=0)   {
     return ok;
   }
 
- 
-  cout << nodecount << " "<< edgecount << endl;
+  cout << edgecount << " "<< nodecount << endl;
   print_graph_dispatch(G, get(vertex_index, G));
 
   return 0;

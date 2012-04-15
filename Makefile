@@ -1,5 +1,5 @@
 #
-all : strgcomp componentsreadbin readalldata conncomp waysreadbin hierachy metisexport
+all : strgcomp componentsreadbin readalldata conncomp waysreadbin hierachy metisexport metisexport2
 	echo done
 #bgl 
 #
@@ -11,6 +11,9 @@ strgcomp : strongcomponents.cpp
 #-save-temps
 metisexport : metisexport.cpp
 	g++ -g -o metisexport  metisexport.cpp -lboost_system  -lboost_graph
+
+metisexport2 : metisexport2.cpp
+	g++ -g -o metisexport2  metisexport2.cpp -lboost_system  -lboost_graph
 
 conncomp : conncomponents.cpp
 	mpiCC -g -o conncomp  conncomponents.cpp -lboost_system  -lboost_graph
