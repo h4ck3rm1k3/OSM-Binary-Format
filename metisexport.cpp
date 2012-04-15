@@ -7,25 +7,19 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //=======================================================================
 
-#include <boost/config.hpp>
 #include <iostream>
 #include <vector>
-#include <boost/graph/strong_components.hpp>
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/graphviz.hpp>
-#include <boost/graph/graph_utility.hpp>
+#include <math.h>
 #include "FOSMBin.hpp"
 
-typedef boost::adjacency_list<boost::listS, boost::vecS, boost::undirectedS> Graph;
-typedef typename Graph::vertex_descriptor vertex_descriptor;
-typedef typename Graph::edge_property_type edge_property; 
+typedef std::map<int, int >  node_edge_t; // a way can be a member of many components, we need to figure out how and way
 
 
-int edgecount;
-int read_graph(Graph & g) {
-  // now read the graph
-  edgecount=0;
+typedef std::map<int, node_edge_t > node_node_t; // a way can be a member of many components, we need to figure out how and way
 
+//int edgecount;
+int read_graph(node_node_t & g,int &edgecount) {
+  edgecount =0;
   FILE * pFile;
   pFile = fopen ( "waynodes.bin" , "r" );
   if (!pFile)   {
@@ -51,55 +45,79 @@ int read_graph(Graph & g) {
     fread ((void*)&waynodes, sizeof(int), j , pFile ); // data
     
     // now we can process the edges...
-
-
     int j2=0;
-    vertex_descriptor prev = (int)waynodes[0];
+    int prev = (int)waynodes[0];
 
     for (j2 =1; j2< j; j2++)    {
-      vertex_descriptor to = (int)waynodes[j2];
-      //      edges are from the nodes to each other, not from the way to the edge
-      boost::add_edge(prev ,to, g); 
-      //      boost::add_edge(to+1,prev +1, g);
-      edgecount++;
+      int to = (int)waynodes[j2];
+      int count=0;
+      if (prev != to)        {
+
+
+        count = g[prev][to]++;
+        if (count == 0)
+          {
+            edgecount++;
+          }
+
+        count = g[to][prev]++; // and the reverse
+        if (count == 0)
+          {
+            edgecount++;
+          }
+
+      }
       prev= to;
     }
 
   }
 
+
+
   fclose (pFile);
   return 0;
 }
 
-template <class Name>
-void print_graph_dispatch(const Graph& G, Name name)
-  {
-    boost::graph_traits<Graph>::vertex_iterator ui,ui_end;
-    for (boost::tie(ui,ui_end) = vertices(G); ui != ui_end; ++ui) {
-      std::cout << get(name,*ui)+1 << " "; // self edge, add one to be 1 indexd not 0
-      boost::graph_traits<Graph>::out_edge_iterator ei, ei_end;
-      for(boost::tie(ei,ei_end) = out_edges(*ui,G); ei != ei_end; ++ei)
-        std::cout << get(name,target(*ei,G)) +1 << " ";// add one
-      std::cout << std::endl;
-    }
-  }
 
 int main(int, char*[])
 {
-  using namespace boost;
+
   using namespace std;
   const char* name = "kosovo osm ways";
-  Graph G;
+
+  node_node_t G;
   Geography geo;
-  int ok =read_graph(G);
-  int   nodecount =  num_vertices(G);
+  int   edgecount ;
+  int ok =read_graph(G,edgecount);
   
   if(ok !=0)   {
     return ok;
   }
 
-  cout << edgecount << " "<< nodecount << endl;
-  print_graph_dispatch(G, get(vertex_index, G));
 
+  geo.read_data<int>    ("nodeindex.bin" , geo.node_id); 
+  int nodecount= geo.node_id.size() +1;
+  edgecount = ceil(edgecount/2)+1; // should round up
+  cout << nodecount << " "<< edgecount << endl;
+
+  vector<int>::const_iterator nid;
+  int index=1; // metis uses index 1 not 0
+  for(nid=geo.node_id.begin(); nid!=geo.node_id.end(); nid++) {
+    node_node_t::const_iterator nit;
+    nit=G.find(index);
+    if (nit != G.end()) {
+      const node_edge_t & e=nit->second;
+      node_edge_t::const_iterator eit;
+      for(eit=e.begin(); eit!=e.end(); eit++) {
+        if (eit->first != index) { //no self loops
+          
+          cout << eit->first << " ";
+        }
+      }
+    }
+    cout << endl;
+    index++;
+  }
+  cout << "%eof" << endl; // need this because of empty lines
   return 0;
 }

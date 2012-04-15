@@ -10,7 +10,7 @@ strgcomp : strongcomponents.cpp
 	mpiCC -g -o strgcomp  strongcomponents.cpp -lboost_system  -lboost_graph
 #-save-temps
 metisexport : metisexport.cpp
-	g++ -g -o metisexport  metisexport.cpp -lboost_system  -lboost_graph
+	g++ -g -o metisexport  metisexport.cpp 
 
 metisexport2 : metisexport2.cpp
 	g++ -g -o metisexport2  metisexport2.cpp -lboost_system  -lboost_graph
