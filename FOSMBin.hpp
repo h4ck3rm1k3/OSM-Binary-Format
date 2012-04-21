@@ -44,7 +44,6 @@ public:
     // loop over all the ways
     int wayindex=0;
     for (wayindex =0; wayindex < waycount; wayindex++)    {
-
       int i2;
       fread ((void*)&i2 , sizeof(int), 1 , pFile ); // index
       if (i2 != wayindex)   {
@@ -53,13 +52,21 @@ public:
       }
   
       int node_count;
-      fread ((void*)&node_count , sizeof(int), 1 , pFile ); // size
+      const int max_node_count=1024;// FIXME!
+      //fread ((void*)&node_count , sizeof(int), 1 , pFile ); // size
+      // if it is zero we can read until we find a null
 
-      int waynodes[node_count];
-      fread ((void*)&waynodes, sizeof(int), node_count , pFile ); // data    
+      int waynodes[max_node_count];
+      //fread ((void*)&waynodes, sizeof(int), node_count , pFile ); // dont read it, we look for 0 to end the list of data    
 
       // now we can process the edges...    
       int j2;// index
+      do {
+        fread ((void*)&waynodes[j2], sizeof(long int), 1 , pFile ); // we look for 0 to end the list of data            
+        if (waynodes[j2]!=0)    j2++;
+      } until (waynodes[j2]==0) 
+
+      //      for (j2 =0; j2< node_count; j2++)    {
       for (j2 =0; j2< node_count; j2++)    {
         int tonode = (int)waynodes[j2];
 
